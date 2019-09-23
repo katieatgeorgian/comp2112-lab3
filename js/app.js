@@ -128,10 +128,12 @@ function fetchGifs() {
         (gif, index) =>
           `<img data-index=${index} class="p-1 w-100" src=${gif.images.original.url}>`
       );
-      gifsStill = originalGifs.map(
-        (gif, index) =>
-          `<img data-index=${index} class="p-1" src=${gif.images.fixed_height_small_still.url}>`
-      );
+      gifsStill = originalGifs
+        .map(
+          (gif, index) =>
+            `<img data-index=${index} class="p-1" src=${gif.images.fixed_height_small_still.url}>`
+        )
+        .join("");
       browsegifs.innerHTML = gifsStill;
 
       // unhide switch to toggle gif animations
@@ -143,7 +145,7 @@ function chooseGif(e) {
   e.preventDefault();
   if (e.target.matches("img")) {
     const index = e.target.dataset.index;
-    console.log(index);
+
     let oneImage = `${gifsArrayOriginalSize[index]}`;
     imgGifPoll.innerHTML = oneImage;
     //closes modal
