@@ -13,16 +13,16 @@ const toggle = document.querySelector("input.custom-control-input");
 // this will be our text and any images, gifs and polls the user posts
 const tweets = [];
 
-// these gifs will be displayed and will be a subset of originalGifs
-// (but it's totally up to you how you want to implement it;
-// you could for example just use originalGifs alone)
+//holds all the mapped originalGifs info
 let gifs = [];
 
 // these gifs are the original JSON we got from our fetch in case we need it
 let originalGifs = [];
 
+//holds all the mapped originalGifs in original size
 let gifsArrayOriginalSize = [];
 
+//holds the mapped originalGifs in their stilled format
 let gifsStill = [];
 
 // this will display all the objects in my tweets array
@@ -124,23 +124,31 @@ function fetchGifs() {
             `<img data-index=${index} class="p-1" src=${gif.images.fixed_height_small.url}>`
         )
         .join("");
+
       gifsArrayOriginalSize = originalGifs.map(
         (gif, index) =>
           `<img data-index=${index} class="p-1 w-100" src=${gif.images.original.url}>`
       );
+
       gifsStill = originalGifs
         .map(
           (gif, index) =>
             `<img data-index=${index} class="p-1" src=${gif.images.fixed_height_small_still.url}>`
         )
         .join("");
-      browsegifs.innerHTML = gifsStill;
+
+      if (toggle.checked == true) {
+        browsegifs.innerHTML = gifs;
+      } else {
+        browsegifs.innerHTML = gifsStill;
+      }
 
       // unhide switch to toggle gif animations
       switchgifsarea.classList.remove("hide");
     });
 }
 
+//function to select one image from search results
 function chooseGif(e) {
   e.preventDefault();
   if (e.target.matches("img")) {
